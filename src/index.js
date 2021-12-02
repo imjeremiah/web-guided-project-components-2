@@ -62,11 +62,11 @@ function getDogs(breed, count) {
     }).finally(() => console.log("WOOOOO"))
 }
 
-function createDogCards(dogs, selector) {
+function createDogCards(dogs, selector, selectedBreed) {
   for (let i = 0; i < dogs.length; i++) {
     const dogObj = {
       imageURL: dogs[i],
-      breed: "Casey"
+      breed: selectedBreed
     }
     const entryPoint = document.querySelector(selector);
     entryPoint.appendChild(dogCardMaker(dogObj));
@@ -91,3 +91,13 @@ dogBtn.addEventListener('click', () => {
 // and loop over them, fetching a dog at each iteration
 
 console.log(breeds);
+
+for (let i = 0; i < breeds.length; i++) {
+  axios.get(`https://dog.ceo/api/breed/${breeds[i]}/images/random/2`)
+    .then(resp => {
+      createDogCards(resp.data.message, '.entry', breeds[i]);
+    })
+    .catch(err => {
+      console.error(err);
+    })
+}
