@@ -79,6 +79,7 @@ function createDogCards(dogs, selector) {
 // event listener that executes `getDogs`
 const dogBtn = document.querySelector(".dog-button");
 dogBtn.addEventListener('click', () => {
+  document.querySelector('.entry').innerHTML = "";
   getDogs('labrador', 5);
 })
 
@@ -89,3 +90,4 @@ dogBtn.addEventListener('click', () => {
 // or request them from https://lambda-times-api.herokuapp.com/breeds
 // and loop over them, fetching a dog at each iteration
 
+console.log(breeds);
