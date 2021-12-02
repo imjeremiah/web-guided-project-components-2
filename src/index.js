@@ -49,7 +49,7 @@ function dogCardMaker({ imageURL, breed }) {
 // 👉 (OPTIONAL) TASK 6- Wrap the fetching operation inside a function `getDogs`
 // that takes a breed and a count (of dogs)
 function getDogs(breed, count) {
-  axios.get(`https://do.ceo/api/breed/${breed}/images/random/${count}`)
+  axios.get(`https://dog.ceo/api/breed/${breed}/images/random/${count}`)
     .then(resp => {
       createDogCards(resp.data.message);
     }).catch(error => {
