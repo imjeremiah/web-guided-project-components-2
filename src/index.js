@@ -49,20 +49,25 @@ function dogCardMaker({ imageURL, breed }) {
 // 👉 (OPTIONAL) TASK 6- Wrap the fetching operation inside a function `getDogs`
 // that takes a breed and a count (of dogs)
 function getDogs(breed, count) {
-  axios.get('https://dog.ceo/api/breed/pitbull/images/random/5')
-  .then(resp => {
-    console.log(resp.data.message);
-    for (let i = 0; i < resp.data.message.length; i++) {
-      const dogObj = {
-        imageURL: resp.data.message[i],
-        breed: "Casey"
-      }
-      entryPoint.appendChild(dogCardMaker(dogObj));
-    }
-  }).catch(error => {
-    console.error(error);
-  }).finally(() => console.log("WOOOOO"))
+  axios.get(`https://dog.ceo/api/breed/${breed}/images/random/${count}`)
+    .then(resp => {
+      createDogCards(resp.data.message);
+    }).catch(error => {
+      console.error(error);
+    }).finally(() => console.log("WOOOOO"))
 }
+
+function createDogCards(dogs) {
+  for (let i = 0; i < dogs.length; i++) {
+    const dogObj = {
+      imageURL: dogs[i],
+      breed: "Casey"
+    }
+    entryPoint.appendChild(dogCardMaker(dogObj));
+  }
+}
+
+getDogs('husky', 5);
 
 // 👉 (OPTIONAL) TASK 7- Put a button in index.html to 'get dogs' and add a click
 // event listener that executes `getDogs`
