@@ -1,19 +1,15 @@
+import axios from 'axios';
 // 👉 TASK 1- Test out the following endpoints:
 
-//  https://lambda-times-api.herokuapp.com/friends
-//  https://lambda-times-api.herokuapp.com/friends/1
-//  https://lambda-times-api.herokuapp.com/quotes
-//  https://lambda-times-api.herokuapp.com/cards
-//  https://lambda-times-api.herokuapp.com/breeds
 //  https://dog.ceo/api/breeds/image/random
 
-//  * With Chrome and the Network Tab
+//  * With Firefox! and the Network Tab
 //  * With JS using the native fetch [STRETCH]
 
 
 // 👉 TASK 2- Select the "entry point", the element
 // inside of which we'll inject our dog cards 
-const entryPoint = null
+const entryPoint = document.querySelector('.entry');
 
 
 // 👉 TASK 3- `dogCardMaker` takes an object and returns a Dog Card.
@@ -50,10 +46,23 @@ function dogCardMaker({ imageURL, breed }) {
 //    * ON FAILURE: log the error to the console
 //    * IN ANY CASE: log "done" to the console
 
-
 // 👉 (OPTIONAL) TASK 6- Wrap the fetching operation inside a function `getDogs`
 // that takes a breed and a count (of dogs)
-
+function getDogs(breed, count) {
+  axios.get('https://dog.ceo/api/breed/pitbull/images/random/5')
+  .then(resp => {
+    console.log(resp.data.message);
+    for (let i = 0; i < resp.data.message.length; i++) {
+      const dogObj = {
+        imageURL: resp.data.message[i],
+        breed: "Casey"
+      }
+      entryPoint.appendChild(dogCardMaker(dogObj));
+    }
+  }).catch(error => {
+    console.error(error);
+  }).finally(() => console.log("WOOOOO"))
+}
 
 // 👉 (OPTIONAL) TASK 7- Put a button in index.html to 'get dogs' and add a click
 // event listener that executes `getDogs`
