@@ -53,7 +53,7 @@ function dogCardMaker({ imageURL, breed }) {
 function getDogs(breed, count) {
   axios.get(`https://dog.ceo/api/breed/${breed}/images/random/${count}`)
     .then(resp => {
-      createDogCards(resp.data.message, '.entry');
+      createDogCards(resp.data.message, '.entry', breed);
     }).catch(error => {
       console.error(error);
       const errorMsg = document.createElement('p');
@@ -90,14 +90,6 @@ dogBtn.addEventListener('click', () => {
 // or request them from https://lambda-times-api.herokuapp.com/breeds
 // and loop over them, fetching a dog at each iteration
 
-console.log(breeds);
-
 for (let i = 0; i < breeds.length; i++) {
-  axios.get(`https://dog.ceo/api/breed/${breeds[i]}/images/random/2`)
-    .then(resp => {
-      createDogCards(resp.data.message, '.entry', breeds[i]);
-    })
-    .catch(err => {
-      console.error(err);
-    })
+  getDogs(breeds[i], 3);
 }
