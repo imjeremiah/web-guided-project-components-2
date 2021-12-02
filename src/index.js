@@ -1,4 +1,6 @@
 import axios from 'axios';
+import breeds from './breeds.js';
+
 // 👉 TASK 1- Test out the following endpoints:
 
 //  https://dog.ceo/api/breeds/image/random
@@ -9,7 +11,7 @@ import axios from 'axios';
 
 // 👉 TASK 2- Select the "entry point", the element
 // inside of which we'll inject our dog cards 
-const entryPoint = document.querySelector('.entry');
+// const entryPoint = document.querySelector('.entry');
 
 
 // 👉 TASK 3- `dogCardMaker` takes an object and returns a Dog Card.
@@ -51,7 +53,7 @@ function dogCardMaker({ imageURL, breed }) {
 function getDogs(breed, count) {
   axios.get(`https://dog.ceo/api/breed/${breed}/images/random/${count}`)
     .then(resp => {
-      createDogCards(resp.data.message);
+      createDogCards(resp.data.message, '.entry');
     }).catch(error => {
       console.error(error);
       const errorMsg = document.createElement('p');
@@ -60,22 +62,30 @@ function getDogs(breed, count) {
     }).finally(() => console.log("WOOOOO"))
 }
 
-function createDogCards(dogs) {
+function createDogCards(dogs, selector) {
   for (let i = 0; i < dogs.length; i++) {
     const dogObj = {
       imageURL: dogs[i],
       breed: "Casey"
     }
+    const entryPoint = document.querySelector(selector);
     entryPoint.appendChild(dogCardMaker(dogObj));
   }
 }
 
-getDogs('husky', 5);
+// getDogs('husky', 5);
 
 // 👉 (OPTIONAL) TASK 7- Put a button in index.html to 'get dogs' and add a click
 // event listener that executes `getDogs`
+const dogBtn = document.querySelector(".dog-button");
+dogBtn.addEventListener('click', () => {
+  getDogs('labrador', 5);
+})
 
+// Write a function that takes in a css selector (or just selector)
+// and appends 'cards' to that selector
 
 // 👉 (OPTIONAL) TASK 8- Import the breeds from `breeds.js`
 // or request them from https://lambda-times-api.herokuapp.com/breeds
 // and loop over them, fetching a dog at each iteration
+
